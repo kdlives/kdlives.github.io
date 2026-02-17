@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K Deva Sabai — Illustrator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #f9f9f9;
+            color: #111;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: #fff;
+            border-bottom: 2px solid #111;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .site-title {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            padding: 18px 0;
+            text-decoration: none;
+            color: #111;
+            white-space: nowrap;
+        }
+
+        .site-title span {
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav a {
+            display: block;
+            padding: 20px 22px;
+            text-decoration: none;
+            color: #111;
+            font-size: 12px;
+            font-family: Arial, Helvetica, sans-serif;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 700;
+            border-left: 1px solid #e0e0e0;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: #111;
+            color: #fff;
+        }
+
+        /* Main content */
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 50px 40px;
+        }
+
+        /* Pages */
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* Gallery grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 3/4;
+            overflow: hidden;
+            background: #e8e8e8;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: opacity 0.2s;
+        }
+
+        .gallery-item:hover img { opacity: 0.85; }
+
+        .gallery-item.placeholder {
+            color: #bbb;
+            font-size: 12px;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Square grid for Films & Comics */
+        .square-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .square-item {
+            aspect-ratio: 1/1;
+            background: #e8e8e8;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .square-item.placeholder {
+            color: #bbb;
+            font-size: 12px;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .square-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* About */
+        .about-content { max-width: 700px; }
+
+        .about-content h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+        }
+
+        .about-content p {
+            font-size: 17px;
+            line-height: 1.85;
+            margin-bottom: 22px;
+            color: #333;
+        }
+
+        .influences {
+            margin-top: 44px;
+            padding-top: 30px;
+            border-top: 1px solid #ddd;
+        }
+
+        .influences h3 {
+            font-size: 11px;
+            font-family: Arial, sans-serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+            color: #888;
+        }
+
+        .influences ul {
+            list-style: none;
+            columns: 2;
+            column-gap: 40px;
+        }
+
+        .influences li {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        /* Blog */
+        .blog-posts { max-width: 780px; }
+
+        .blog-post {
+            padding-bottom: 48px;
+            margin-bottom: 48px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .blog-post:last-child { border-bottom: none; }
+
+        .blog-post .date {
+            font-size: 11px;
+            font-family: Arial, sans-serif;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #999;
+            margin-bottom: 10px;
+        }
+
+        .blog-post h2 {
+            font-size: 26px;
+            margin-bottom: 14px;
+            letter-spacing: -0.5px;
+            font-weight: 700;
+        }
+
+        .blog-post h2 a {
+            color: #111;
+            text-decoration: none;
+        }
+
+        .blog-post h2 a:hover { text-decoration: underline; }
+
+        .blog-post p {
+            font-size: 16px;
+            line-height: 1.75;
+            color: #444;
+        }
+
+        .blog-post .read-more {
+            display: inline-block;
+            margin-top: 14px;
+            font-size: 11px;
+            font-family: Arial, sans-serif;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #111;
+            text-decoration: none;
+            border-bottom: 1px solid #111;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid #ddd;
+            margin-top: 80px;
+            padding: 28px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            font-family: Arial, sans-serif;
+            color: #999;
+        }
+
+        footer a {
+            color: #666;
+            text-decoration: none;
+        }
+
+        footer a:hover { color: #111; }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            header {
+                flex-direction: column;
+                padding: 20px;
+                gap: 10px;
+            }
+            nav a { padding: 12px 14px; font-size: 11px; }
+            main { padding: 30px 20px; }
+            .gallery-grid, .square-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 560px) {
+            .gallery-grid, .square-grid { grid-template-columns: 1fr; }
+            .influences ul { columns: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a class="site-title" href="#" id="logo-link">K Deva Sabai <span>— Illustrator</span></a>
+        <nav>
+            <a href="#" class="nav-link active" data-page="home">Home</a>
+            <a href="#" class="nav-link" data-page="films">Films</a>
+            <a href="#" class="nav-link" data-page="comics">Comics</a>
+            <a href="#" class="nav-link" data-page="art">Art</a>
+            <a href="#" class="nav-link" data-page="about">About</a>
+            <a href="#" class="nav-link" data-page="blog">Blog</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- HOME -->
+        <div id="home" class="page active">
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="ringu1.jpg" alt="Illustration">
+                </div>
+                <div class="gallery-item placeholder">[2]</div>
+                <div class="gallery-item placeholder">[3]</div>
+                <div class="gallery-item placeholder">[4]</div>
+                <div class="gallery-item placeholder">[5]</div>
+                <div class="gallery-item placeholder">[6]</div>
+                <div class="gallery-item placeholder">[7]</div>
+                <div class="gallery-item placeholder">[8]</div>
+                <div class="gallery-item placeholder">[9]</div>
+            </div>
+        </div>
+
+        <!-- FILMS -->
+        <div id="films" class="page">
+            <div class="square-grid">
+                <div class="square-item placeholder">[Film 1]</div>
+                <div class="square-item placeholder">[Film 2]</div>
+                <div class="square-item placeholder">[Film 3]</div>
+                <div class="square-item placeholder">[Film 4]</div>
+                <div class="square-item placeholder">[Film 5]</div>
+                <div class="square-item placeholder">[Film 6]</div>
+            </div>
+        </div>
+
+        <!-- COMICS -->
+        <div id="comics" class="page">
+            <div class="square-grid">
+                <div class="square-item placeholder">[Comic 1]</div>
+                <div class="square-item placeholder">[Comic 2]</div>
+                <div class="square-item placeholder">[Comic 3]</div>
+                <div class="square-item placeholder">[Comic 4]</div>
+                <div class="square-item placeholder">[Comic 5]</div>
+                <div class="square-item placeholder">[Comic 6]</div>
+            </div>
+        </div>
+
+        <!-- ART -->
+        <div id="art" class="page">
+            <div class="gallery-grid">
+                <div class="gallery-item placeholder">[Art 1]</div>
+                <div class="gallery-item placeholder">[Art 2]</div>
+                <div class="gallery-item placeholder">[Art 3]</div>
+                <div class="gallery-item placeholder">[Art 4]</div>
+                <div class="gallery-item placeholder">[Art 5]</div>
+                <div class="gallery-item placeholder">[Art 6]</div>
+            </div>
+        </div>
+
+        <!-- ABOUT -->
+        <div id="about" class="page">
+            <div class="about-content">
+                <h2>About</h2>
+                <p>I'm an illustrator working primarily in black and white pen and ink, heavily influenced by the bold linework and cross-hatching techniques of bronze age and modern age comics.</p>
+                <p>My work uses traditional hatching methods to create depth, texture, and dramatic contrast — a practice rooted in the great tradition of comic book and editorial illustration.</p>
+                <div class="influences">
+                    <h3>Influences</h3>
+                    <ul>
+                        <li>Alfredo Alcala</li>
+                        <li>Moebius</li>
+                        <li>Robert Crumb</li>
+                        <li>Frank Miller</li>
+                        <li>John Byrne</li>
+                        <li>Mike Mignola</li>
+                        <li>Brian Bolland</li>
+                        <li>Carlos Ezquerra</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- BLOG -->
+        <div id="blog" class="page">
+            <div class="blog-posts">
+                <article class="blog-post">
+                    <p class="date">February 2026</p>
+                    <h2><a href="#">Article Title Here</a></h2>
+                    <p>This is where your blog post will go. Write about your process, techniques, influences, or thoughts on illustration and comics art...</p>
+                    <a href="#" class="read-more">Read more</a>
+                </article>
+                <article class="blog-post">
+                    <p class="date">January 2026</p>
+                    <h2><a href="#">Another Article</a></h2>
+                    <p>Add your articles here — discussions about hatching techniques, reviews of classic comics, thoughts on bronze age illustration, anything you'd like to share.</p>
+                    <a href="#" class="read-more">Read more</a>
+                </article>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <span>© 2026 K Deva Sabai</span>
+        <a href="https://instagram.com/kdevasabai" target="_blank">@kdevasabai</a>
+    </footer>
+
+    <script>
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+
+        function showPage(pageId) {
+            navLinks.forEach(l => l.classList.remove('active'));
+            pages.forEach(p => p.classList.remove('active'));
+            const target = document.querySelector(`[data-page="${pageId}"]`);
+            if (target) target.classList.add('active');
+            const page = document.getElementById(pageId);
+            if (page) page.classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                showPage(link.getAttribute('data-page'));
+            });
+        });
+
+        document.getElementById('logo-link').addEventListener('click', e => {
+            e.preventDefault();
+            showPage('home');
+        });
+    </script>
+
+</body>
+</html>
